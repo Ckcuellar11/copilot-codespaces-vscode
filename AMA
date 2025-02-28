@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMA LOGISTIC - Inicio de Sesión</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <style>
+        /* Estilos para la página de ingreso */
+        body.login-page {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://via.placeholder.com/1920x1080');
+            background-size: cover;
+            background-position: center;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-container h1 {
+            color: #004085;
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .login-container p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        .login-container input:focus {
+            border-color: #004085;
+            outline: none;
+        }
+        .login-container button {
+            background: #004085;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            padding: 12px;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+            font-size: 16px;
+        }
+        .login-container button:hover {
+            background: #003366;
+        }
+        .login-container .logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        .login-container .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+        .login-container .footer a {
+            color: #004085;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .login-container .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilos para la parte interna */
+        body.internal-page {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+ /* Estilos para la barra de usuario y logo */
+.navbar {
+    background: #004085;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-size: 18px; /* Reducir el tamaño de la fuente */
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    height: 50px; /* Altura fija */
+}
+
+/* Contenedor para el usuario activo y el botón */
+.navbar-left {
+    display: flex;
+    align-items: center; /* Alinear verticalment */
+    gap: 10px; /* Espacio entre el usuario y el botón */
+}
+
+/* Estilos para el usuario activo */
+.usuario-actual {
+    font-size: 10px; /* Reducir el tamaño de la fuente */
+    font-weight: normal;
+    position: relative; /* Posición relativa para ajustes finos */
+    top: 1px; /* Bajar ligeramente el texto para alinearlo con el botón */
+}
+
+/* Estilos para el botón de cerrar sesión */
+.btn-cerrar-sesion {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px; /* Reducir el padding para hacerlo más pequeño */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+    transition: background 0.3s ease;
+    margin-left: 10px; /* Añadir margen a la izquierda para separarlo del usuario */
+    position: relative; /* Posición relativa para ajustes finos */
+    top: -4px; /* Subir el botón ligeramente */
+}
+
+.btn-cerrar-sesion:hover {
+    background: #c82333;
+}
+        .navbar .usuario-actual {
+            font-size: 16px;
+            font-weight: normal;
+        }
+        .navbar .cerrar-sesion {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            width: auto;
+        }
+        .navbar .cerrar-sesion:hover {
+            background: #c82333;
+        }
+//botones
+
+<button class="btn-funcion">Función</button>
+<button class="btn-editar">Editar</button>
+<button class="btn-eliminar">Eliminar</button>
+
+<div class="tabs">
+    <button onclick="mostrarSeccion('recursosHumanos')">Recursos Humanos</button>
+    <button onclick="mostrarSeccion('operacion')">Operación</button>
+    <button onclick="mostrarSeccion('financiera')">Financiera</button>
+    <button onclick="mostrarSeccion('informe')">Informe</button>
+</div>
+
+
+/*estilo para la barra de navegación*/
+
+.tabs {
+    display: flex; /* Alinea los botones horizontalmente */
+    justify-content: flex-start; /* Alinea los botones a la izquierda */
+    background: #0056b3; /* Color de fondo de la barra */
+    padding: 10px; /* Espaciado interno */
+    position: fixed; /* Fija la barra en la parte superior */
+    top: 50px; /* Ajusta la posición debajo de la barra de navegación */
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    height: 40px; /* Altura de la barra */
+}
+
+.tabs button {
+    background: none; /* Fondo transparente */
+    border: none; /* Sin bordes */
+    color: white; /* Texto blanco */
+    font-size: 14px; /* Tamaño de la fuente */
+    cursor: pointer;
+    padding: 10px 20px; /* Padding interno */
+    font-weight: bold;
+    transition: background 0.3s ease;
+    height: 100%; /* Altura completa del contenedor */
+    display: flex;
+    align-items: center; /* Centrar el texto verticalmente */
+    margin: 0; /* Eliminar márgenes */
+    border-right: 1px solid rgba(255, 255, 255, 0.2); /* Separador entre botones */
+}
+
+.tabs button:hover {
+    background: rgba(255, 255, 255, 0.2); /* Efecto al pasar el mouse */
+}
+
+/* Eliminar el borde derecho del último botón */
+.tabs button:last-child {
+    border-right: none;
+}
+
+/* Eliminar el borde derecho del último botón */
+.tabs button:last-child {
+    border-right: none;
+}
+
+
+.container {
+    max-width: 1200px;
+    margin: 100px auto 40px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex; /* Cambiar a flex para alinear horizontalmente */
+    flex-direction: row; /* Asegurar que los elementos estén en fila */
+    justify-content: space-between; /* Distribuir el espacio entre los elementos */
+    align-items: center; /* Centrar verticalmente los elementos */
+    gap: 20px; /* Espacio entre los elementos */
+}
+.container button {
+    background: #004085;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    font-size: 16px;
+    width: 200px; /* Ancho fijo para los botones */
+    text-align: center; /* Centrar el texto dentro del botón */
+}
+
+.container button:hover {
+    background: #003366;
+}
+
+.container input, .container select {
+    width: 100%;
+    padding: 8px; /* Reducir el padding */
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+}
+
+
+        h2 {
+            text-align: center;
+            color: #004085;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: flex-box;
+            margin-top: 15px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #004085;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            padding: 12px;
+            width: 100%;
+            margin-top: 0px;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #003366;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+	    border: 1px solid #ccc;
+	    padding: 12px; /* Ajusta el padding de las celdas */
+	    text-align: left;
+        }
+        th {
+            background: #004085;
+            color: white;
+        }
+        .exceso-horas {
+            background-color: #ffcccc !important;
+            font-weight: bold;
+            color: red;
+        }
+        .total {
+            font-weight: bold;
+            text-align: right;
+            margin-top: 15px;
+            font-size: 18px;
+            color: #007bff;
+        }
+
+//botones
+
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-eliminar:hover {
+            background: #c82333;
+        }
+        .btn-editar {
+            background: #ffc107;
+            color: black;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-editar:hover {
+            background: #e0a800;
+        }
+
+	.btn-editar {
+	    background-color: #ffc107;
+	    color: black;
+	    padding: 8px 12px;
+	    border-radius: 5px;
+	    border: none;
+	    cursor: pointer;
+	    font-size: 14px;
+	    margin: 5px;
+	}
+
+	.btn-eliminar {
+	    background-color: #dc3545;
+	    color: white;
+	    padding: 8px 12px;
+	    border-radius: 5px;
+	    border: none;
+	    cursor: pointer;
+	    font-size: 14px;
+	    margin: 5px;
+	}
+
+
+.btn-editar {
+    background: #ffc107; /* Color amarillo */
+    color: black; /* Texto negro */
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    font-size: 14px;
+    width: auto;
+    display: flex-box;
+}
+
+.btn-editar:hover {
+    background: #e0a800; /* Color amarillo más oscuro al pasar el mouse */
+}
+
+/* Estilo para el botón de Eliminar */
+.btn-eliminar {
+    background: #dc3545; /* Color rojo */
+    color: white; /* Texto blanco */
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    font-size: 14px;
+    width: auto;
+    display: flex-box;
+}
+
+.btn-eliminar:hover {
+    background: #c82333; /* Color rojo más oscuro al pasar el mouse */
+}
+
+	<table>
+	    <tr>
+	        <td><button class="btn-funcion">Función</button></td>
+	        <td><button class="btn-editar">Editar</button></td>
+	        <td><button class="btn-eliminar">Eliminar</button></td>
+	    </tr>
+	</table>
+
+	<table>
+	    <tr>
+	        <td><button id="btnFuncion">Función</button></td>
+	        <td><button id="btnEditar">Editar</button></td>
+	        <td><button id="btnEliminar">Eliminar</button></td>
+	    </tr>
+	</table>
+
+	td {
+	    padding: 8px; /* Ajusta el padding de las celdas */
+	    text-align: center; /* Centra el contenido de las celdas */
+	}
+
+	td button {
+	    margin: 2px; /* Ajusta el margen entre los botones */
+	}
+
+<div class="container">
+    <h2>Sección de Ejemplo</h2>
+    <button class="btn-funcion">Función</button>
+    <button class="btn-editar">Editar</button>
+    <button class="btn-eliminar">Eliminar</button>
+
+    <table>
+        <tr>
+            <td><button class="btn-funcion">Función</button></td>
+            <td><button class="btn-editar">Editar</button></td>
+            <td><button class="btn-eliminar">Eliminar</button></td>
+        </tr>
+    </table>
+</div>
+
+
+.btn-editar {
+    background-color: #ffc107;
+    color: black;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+}
+
+.btn-eliminar {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 8px;
+    text-align: center;
+}
+
+td button {
+    margin: 2px;
+}
+
+// hasta acá van los botones ojo
+
+        .filtro {
+            margin-bottom: 20px;
+        }
+        .filtro input, .filtro select {
+            width: calc(100% - 20px);
+            margin-right: 10px;
+        }
+        .filtro-rango-fechas {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .filtro-rango-fechas input {
+            width: 100%;
+        }
+        /* Estilos para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-contenido {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .modal-cerrar {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .modal-cerrar:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body class="login-page">
+    <!-- Pantalla de inicio de sesión -->
+    <div class="login-container">
+        <img src="https://via.placeholder.com/150" alt="Logo AMA LOGISTIC" class="logo">
+        <h1>Bienvenido a AMA LOGISTIC</h1>
+        <p>Optimización, Control y Eficiencia en la Gestión Logística</p>
+        <input type="text" id="usuario" placeholder="Usuario" required>
+        <input type="password" id="contrasena" placeholder="Contraseña" required>
+        <button onclick="iniciarSesion()">Iniciar Sesión</button>
+        <div class="footer">
+            © 2023 AMA LOGISTIC. Todos los derechos reservados. | <a href="#">Política de Privacidad</a>
+        </div>
+    </div>
+
+    <!-- Contenido principal (oculto hasta el inicio de sesión) -->
+    <div id="mainContent" style="display: none;">
+<div class="navbar">
+    <span>AMA LOGISTIC - Sistema de Gestión</span>
+    <div class="navbar-left">
+        <span class="usuario-actual">Usuario: <span id="nombreUsuarioActual"></span></span>
+        <button class="btn-cerrar-sesion" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+</div>
+        <div class="tabs">
+    <button onclick="mostrarSeccion('recursosHumanos')">Recursos Humanos</button>
+    <button onclick="mostrarSeccion('operacion')">Operación</button>
+    <button onclick="mostrarSeccion('financiera')">Financiera</button>
+    <button onclick="mostrarSeccion('informe')">Informe</button>
+        </div>
+
+<!-- Sección de Recursos Humanos -->
+<div id="recursosHumanos" class="container">
+    <h2>Recursos Humanos</h2>
+    <button onclick="mostrarSeccion('registro')">Registro de Trabajadores</button>
+    <button onclick="mostrarSeccion('usuarios')">Gestión de Usuarios</button>
+</div>
+
+<!-- Sección de Operación -->
+<div id="operacion" class="container">
+    <h2>Operación</h2>
+    <button onclick="mostrarSeccion('jornadas')">Registro de Jornadas</button>
+    <button onclick="mostrarSeccion('sedes')">Gestión de Sedes</button>
+</div>
+
+<!-- Sección de Financiera -->
+<div id="financiera" class="container">
+    <h2>Financiera</h2>
+    <button onclick="mostrarSeccion('tarifas')">Configuración de Tarifas</button>
+    <button onclick="mostrarSeccion('nomina')">Generar Nómina</button>
+    <button onclick="mostrarSeccion('facturacion')">Facturación</button>
+</div>
+
+<!-- Sección de Informe -->
+<div id="informe" class="container">
+    <h2>Informes Generales</h2>
+    <button onclick="generarInforme()">Generar Informe</button>
+</div>
+
+<div id="nomina" class="container">
+    <h2>Generar Nómina</h2>
+    <form id="nominaForm">
+        <label>Seleccione el período:</label>
+        <input type="month" id="periodoNomina" required>
+        <button type="submit">Generar Nómina</button>
+    </form>
+    <div id="resultadoNomina"></div>
+</div>
+<div id="facturacion" class="container">
+    <h2>Facturación</h2>
+    <form id="facturacionForm">
+        <label>Cliente:</label>
+        <input type="text" id="clienteFacturacion" required>
+        <label>Monto:</label>
+        <input type="number" id="montoFacturacion" required>
+        <label>Fecha de emisión:</label>
+        <input type="date" id="fechaFacturacion" required>
+        <button type="submit">Generar Factura</button>
+    </form>
+    <div id="resultadoFacturacion"></div>
+</div>
+<div id="informe" class="container">
+    <h2>Informes Generales</h2>
+    <button onclick="generarInforme()">Generar Informe</button>
+    <div id="resultadoInforme"></div>
+</div>
+
+        <!-- Sección de Registro de Trabajadores -->
+        <div id="registro" class="container">
+            <h2>Registro de Trabajadores</h2>
+            <button onclick="abrirModalTrabajador()">Ingresar Nuevo Trabajador</button>
+            <h2>Lista de Trabajadores</h2>
+            <div class="filtro">
+                <input type="text" id="filtroTrabajadores" placeholder="Buscar por nombre o número de documento" oninput="filtrarTrabajadores()">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo de Documento</th>
+                        <th>Número de Documento</th>
+                        <th>Residencia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="listaTrabajadores"></tbody>
+            </table>
+        </div>
+
+        <!-- Modal para Registrar Trabajadores -->
+        <div id="modalTrabajadores" class="modal">
+            <div class="modal-contenido">
+                <h2>Registrar Trabajador</h2>
+                <form id="registroForm">
+                    <label>Tipo de Documento:</label>
+                    <select id="tipoDocumento" required>
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                        <option value="CE">Cédula de Extranjería</option>
+                        <option value="Pasaporte">Pasaporte</option>
+                    </select>
+                    <label>Número de Documento:</label>
+                    <input type="text" id="numeroDocumento" required>
+                    <label>Nombre del Trabajador:</label>
+                    <input type="text" id="nombreTrabajador" required>
+                    <label>Lugar de Residencia:</label>
+                    <input type="text" id="residencia" required>
+                    <button type="submit">Registrar Trabajador</button>
+                </form>
+                <button class="modal-cerrar" onclick="cerrarModalTrabajador()">Cerrar</button>
+            </div>
+        </div>
+
+        <!-- Sección de Registro de Jornadas Laborales -->
+        <div id="jornadas" class="container">
+            <h2>Registro de Jornadas Laborales</h2>
+            <button onclick="abrirModalJornada()">Registrar Nuevo Turno</button>
+            <button onclick="actualizarJornadas()">Actualizar Jornadas</button>
+            <button onclick="descargarExcel()">Descargar Excel</button>
+            <h2>Registros de Jornadas</h2>
+            <div class="filtro">
+                <input type="text" id="filtroBusqueda" placeholder="Buscar por nombre o número de documento" oninput="filtrarJornadas()">
+            </div>
+            <div class="filtro">
+                <select id="filtroSede" onchange="filtrarJornadas()">
+                    <option value="">Todas las sedes</option>
+                </select>
+            </div>
+            <div class="filtro-rango-fechas">
+                <input type="date" id="fechaInicio" onchange="filtrarJornadas()">
+                <input type="date" id="fechaFin" onchange="filtrarJornadas()">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cedula</th>
+			<th>Nombre del trabajador</th>
+                        <th>Sede</th>
+                        <th>Línea</th>
+                        <th>Fecha</th>
+                        <th>Hora Inicio</th>
+                        <th>Hora Fin</th>
+                        <th>Horas Trabajadas</th>
+                        <th>Horas Extras</th>
+                        <th>Tipo de Jornada</th>
+                        <th>Valor Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaRegistrosJornadas"></tbody>
+            </table>
+            <div class="total" id="totalPagoJornadas"></div>
+        </div>
+
+        <!-- Modal para Registrar Jornadas Laborales -->
+        <div id="modalJornadas" class="modal">
+            <div class="modal-contenido">
+                <h2>Registrar Jornada Laboral</h2>
+                <form id="registroJornadaForm">
+                    <label>Nombre del trabajador:</label>
+                    <select id="nombreTrabajadorJornada" required>
+                        <option value="">Seleccione un trabajador</option>
+                    </select>
+                    <label>Sede de trabajo:</label>
+                    <select id="sede" required onchange="cargarLineas()">
+                        <option value="">Seleccione una sede</option>
+                    </select>
+                    <label>Línea:</label>
+                    <select id="linea" required>
+                        <option value="">Seleccione una línea</option>
+                    </select>
+                    <label>Fecha:</label>
+                    <input type="date" id="fechaJornada" required>
+                    <label>Hora de inicio:</label>
+                    <input type="time" id="horaInicio" required>
+                    <label>Hora de fin:</label>
+                    <input type="time" id="horaFin" required>
+                    <label>Horas a descontar:</label>
+                    <input type="number" id="horasDescuento" min="0" step="0.5" value="0">
+                    <label>Tipo de Jornada:</label>
+                    <select id="tipoJornada" required>
+                        <option value="diurna">Diurna</option>
+                        <option value="nocturna">Nocturna</option>
+                        <option value="dominical">Dominical/Festiva</option>
+                    </select>
+                    <button type="submit">Registrar Jornada</button>
+                </form>
+                <button class="modal-cerrar" onclick="cerrarModalJornada()">Cerrar</button>
+            </div>
+        </div>
+
+        <!-- Modal para Editar Jornadas Laborales -->
+        <div id="modalEditarJornada" class="modal">
+            <div class="modal-contenido">
+                <h2>Editar Jornada Laboral</h2>
+                <form id="editarJornadaForm">
+                    <input type="hidden" id="editarJornadaId">
+                    <label>Nombre del trabajador:</label>
+                    <select id="editarNombreTrabajadorJornada" required disabled>
+                        <option value="">Seleccione un trabajador</option>
+                    </select>
+                    <label>Sede de trabajo:</label>
+                    <select id="editarSede" required onchange="cargarLineasEditar()">
+                        <option value="">Seleccione una sede</option>
+                    </select>
+                    <label>Línea:</label>
+                    <select id="editarLinea" required>
+                        <option value="">Seleccione una línea</option>
+                    </select>
+                    <label>Fecha:</label>
+                    <input type="date" id="editarFechaJornada" required>
+                    <label>Hora de inicio:</label>
+                    <input type="time" id="editarHoraInicio" required>
+                    <label>Hora de fin:</label>
+                    <input type="time" id="editarHoraFin" required>
+                    <label>Horas a descontar:</label>
+                    <input type="number" id="editarHorasDescuento" min="0" step="0.5" value="0">
+                    <label>Tipo de Jornada:</label>
+                    <select id="editarTipoJornada" required>
+                        <option value="diurna">Diurna</option>
+                        <option value="nocturna">Nocturna</option>
+                        <option value="dominical">Dominical/Festiva</option>
+                    </select>
+                    <button type="submit">Guardar Cambios</button>
+                </form>
+                <button class="modal-cerrar" onclick="cerrarModalEditarJornada()">Cerrar</button>
+            </div>
+        </div>
+
+        <!-- Sección de Tarifas -->
+        <div id="tarifas" class="container">
+            <h2>Configuración de Tarifas</h2>
+            <button onclick="abrirModalTarifa()">Agregar Nueva Tarifa</button>
+            <h2>Tarifas por Sede</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sede</th>
+                        <th>Hora Diurna</th>
+                        <th>Hora Extra Diurna</th>
+                        <th>Hora Nocturna</th>
+                        <th>Hora Extra Nocturna</th>
+                        <th>Hora Dominical/Festiva</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaTarifas"></tbody>
+            </table>
+        </div>
+
+        <!-- Modal para Agregar Tarifas -->
+        <div id="modalTarifas" class="modal">
+            <div class="modal-contenido">
+                <h2>Agregar Tarifa</h2>
+                <form id="tarifasForm">
+                    <label>Sede:</label>
+                    <select id="sedeTarifa" required onchange="cargarTarifas()">
+                        <option value="">Seleccione una sede</option>
+                    </select>
+                    <label>Valor por hora diurna:</label>
+                    <input type="number" id="tarifaDiurna" min="0" required>
+                    <label>Valor por hora extra diurna:</label>
+                    <input type="number" id="tarifaExtraDiurna" min="0" required>
+                    <label>Valor por hora nocturna:</label>
+                    <input type="number" id="tarifaNocturna" min="0" required>
+                    <label>Valor por hora extra nocturna:</label>
+                    <input type="number" id="tarifaExtraNocturna" min="0" required>
+                    <label>Valor por hora dominical/festiva:</label>
+                    <input type="number" id="tarifaDominical" min="0" required>
+                    <button type="submit">Guardar Tarifa</button>
+                </form>
+                <button class="modal-cerrar" onclick="cerrarModalTarifa()">Cerrar</button>
+            </div>
+        </div>
+
+        <!-- Sección de Sedes -->
+        <div id="sedes" class="container">
+            <h2>Gestión de Sedes</h2>
+            <button onclick="abrirModalSede()">Agregar Nueva Sede</button>
+            <h2>Lista de Sedes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sede</th>
+                        <th>Línea</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaSedes"></tbody>
+            </table>
+        </div>
+
+        <!-- Modal para Agregar Sedes -->
+        <div id="modalSedes" class="modal">
+            <div class="modal-contenido">
+                <h2>Agregar Sede</h2>
+                <form id="sedesForm">
+                    <label>Nombre de la Sede:</label>
+                    <input type="text" id="nombreSede" required>
+                    <label>Línea:</label>
+                    <input type="text" id="lineaSede" required>
+                    <button type="submit">Guardar Sede</button>
+                </form>
+                <button class="modal-cerrar" onclick="cerrarModalSede()">Cerrar</button>
+            </div>
+        </div>
+
+        <!-- Sección de Usuarios -->
+        <div id="usuarios" class="container">
+            <h2>Gestión de Usuarios</h2>
+            <button onclick="abrirModalUsuario()">Agregar Nuevo Usuario</button>
+            <h2>Lista de Usuarios</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Acceso a Registro de Trabajadores</th>
+                        <th>Acceso a Registro de Jornadas</th>
+                        <th>Acceso a Tarifas</th>
+                        <th>Acceso a Sedes</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaUsuarios"></tbody>
+            </table>
+        </div>
+
+        <!-- Modal para Agregar Usuarios -->
+        <div id="modalUsuarios" class="modal">
+            <div class="modal-contenido">
+                <h2>Agregar Usuario</h2>
+                <form id="usuariosForm">
+                    <label>Nombre de usuario:</label>
+                    <input type="text" id="nombreUsuario" required>
+                    <label>Contraseña:</label>
+                    <input type="password" id="contrasenaUsuario" required>
+                    <label>Acceso a Registro de Trabajadores:</label>
+                    <input type="checkbox" id="accesoTrabajadores">
+                    <label>Acceso a Registro de Jornadas:</label>
+                    <input type="checkbox" id="accesoJornadas">
+                    <label>Acceso a Tarifas:</label>
+                    <input type="checkbox" id="accessoTarifas">
+                    <label>Acceso a Sedes:</label>
+                    <input type="checkbox" id="accessoSedes">
+                    <button type="submit">Guardar Usuario</button>
+                </form>
+                <button class="modal-cerrar" onclick="cerrarModalUsuario()">Cerrar</button>
+            </div>
+        </div>
+
+        <!-- Modal para Editar Usuarios -->
+        <div id="modalEditarUsuario" class="modal">
+            <div class="modal-contenido">
+                <h2>Editar Usuario</h2>
+                <form id="editarUsuarioForm">
+                    <input type="hidden" id="editarUsuarioId">
+                    <label>Nombre de usuario:</label>
+                    <input type="text" id="editarNombreUsuario" required disabled>
+                    <label>Acceso a Registro de Trabajadores:</label>
+                    <input type="checkbox" id="editarAccesoTrabajadores">
+                    <label>Acceso a Registro de Jornadas:</label>
+                    <input type="checkbox" id="editarAccesoJornadas">
+                    <label>Acceso a Tarifas:</label>
+                    <input type="checkbox" id="editarAccessoTarifas">
+                    <label>Acceso a Sedes:</label>
+                    <input type="checkbox" id="editarAccessoSedes">
+                    <button type="submit">Guardar Cambios</button>
+                </form>
+                <button class="modal-cerrar" onclick="cerrarModalEditarUsuario()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let tarifas = JSON.parse(localStorage.getItem("tarifas")) || [];
+        let trabajadores = JSON.parse(localStorage.getItem("trabajadores")) || [];
+        let registrosJornadas = JSON.parse(localStorage.getItem("registrosJornadas")) || [];
+        let sedes = JSON.parse(localStorage.getItem("sedes")) || [];
+        let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+        let usuarioActual = null;
+
+        // Función para iniciar sesión
+function iniciarSesion() {
+    const usuario = document.getElementById("usuario").value;
+    const contrasena = document.getElementById("contrasena").value;
+
+    let usuarioEncontrado = usuarios.find(u => u.nombre === usuario && u.contrasena === contrasena);
+    if (usuarioEncontrado) {
+        usuarioActual = usuarioEncontrado;
+        document.body.classList.remove("login-page");
+        document.body.classList.add("internal-page");
+        document.body.style.backgroundImage = "none";
+        document.querySelector(".login-container").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        document.getElementById("nombreUsuarioActual").textContent = usuarioActual.nombre;
+        mostrarSeccion('registro');
+        actualizarTabsSegunPermisos();
+    } else {
+        Swal.fire("Error", "Usuario o contraseña incorrectos", "error");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Escuchar el evento "keydown" en los campos de entrada
+    document.getElementById("usuario").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            iniciarSesion();
+        }
+    });
+
+    document.getElementById("contrasena").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            iniciarSesion();
+        }
+    });
+});
+
+        // Cerrar sesión
+        function cerrarSesion() {
+            usuarioActual = null;
+            document.body.classList.remove("internal-page");
+            document.body.classList.add("login-page");
+            document.body.style.backgroundImage = "url('https://via.placeholder.com/1920x1080')";
+            document.querySelector(".login-container").style.display = "block";
+            document.getElementById("mainContent").style.display = "none";
+        }
+
+        // Actualizar las pestañas según los permisos del usuario
+function actualizarTabsSegunPermisos() {
+    const tabs = document.querySelectorAll(".tabs button");
+    tabs.forEach(tab => {
+        const seccion = tab.getAttribute("onclick").replace("mostrarSeccion('", "").replace("')", "");
+        if (usuarioActual.nombre === "Gerente") {
+            tab.style.display = "inline-block";
+        } else {
+            if (!usuarioActual[`acceso${seccion.charAt(0).toUpperCase() + seccion.slice(1)}`]) {
+                tab.style.display = "none";
+            } else {
+                tab.style.display = "inline-block";
+            }
+        }
+    });
+}
+
+        // Mostrar secciones
+        function mostrarSeccion(id) {
+            document.querySelectorAll('.container').forEach(seccion => seccion.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+
+	//Función Generar Nomina
+document.getElementById("nominaForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    let periodo = document.getElementById("periodoNomina").value;
+    // Lógica para generar la nómina
+    let resultado = `Nómina generada para el período: ${periodo}`;
+    document.getElementById("resultadoNomina").textContent = resultado;
+});
+
+	//Función Generar Factura
+
+document.getElementById("facturacionForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    let cliente = document.getElementById("clienteFacturacion").value;
+    let monto = document.getElementById("montoFacturacion").value;
+    let fecha = document.getElementById("fechaFacturacion").value;
+    // Lógica para generar la factura
+    let resultado = `Factura generada para ${cliente} por un monto de $${monto} el ${fecha}`;
+    document.getElementById("resultadoFacturacion").textContent = resultado;
+});
+
+	//Función Generar Informe
+
+	function generarInforme() {
+    // Lógica para generar el informe
+    let resultado = "Informe generado con éxito.";
+    document.getElementById("resultadoInforme").textContent = resultado;
+}
+
+        // Funciones para abrir y cerrar modales
+        function abrirModalJornada() {
+            actualizarFiltroTrabajadores();
+            actualizarFiltroSedes();
+            document.getElementById("modalJornadas").style.display = "flex";
+        }
+        function cerrarModalJornada() {
+            document.getElementById("modalJornadas").style.display = "none";
+        }
+       
+
+function abrirModalEditarJornada(index) {
+    let registro = registrosJornadas[index];
+    document.getElementById("editarJornadaId").value = index;
+
+    // Cargar datos en los campos (solo lectura para nombre, sede y línea)
+    document.getElementById("editarNombreTrabajadorJornada").value = registro.nombre;
+    document.getElementById("editarSede").value = registro.sede;
+    document.getElementById("editarLinea").value = registro.linea;
+
+    // Permitir edición solo de fecha, hora de inicio y hora de fin
+    document.getElementById("editarFechaJornada").value = registro.fecha;
+    document.getElementById("editarHoraInicio").value = registro.horaInicio;
+    document.getElementById("editarHoraFin").value = registro.horaFin;
+
+    // Mostrar el modal
+    document.getElementById("modalEditarJornada").style.display = "flex";
+}
+
+//Guardar cambios jornadas
+
+document.getElementById("editarJornadaForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    let index = document.getElementById("editarJornadaId").value;
+    let registro = registrosJornadas[index];
+
+    // Actualizar solo los campos editables
+    registro.fecha = document.getElementById("editarFechaJornada").value;
+    registro.horaInicio = document.getElementById("editarHoraInicio").value;
+    registro.horaFin = document.getElementById("editarHoraFin").value;
+
+    // Recalcular horas trabajadas y valor total
+    registro.horasTrabajadas = calcularHoras(registro.horaInicio, registro.horaFin);
+    registro.horasExtras = Math.max(0, registro.horasTrabajadas - 8);
+
+    // Buscar tarifa para la sede
+    let tarifaSede = tarifas.find(t => t.sede === registro.sede);
+    if (tarifaSede) {
+        if (registro.tipoJornada === "diurna") {
+            registro.valorTotal = (Math.min(registro.horasTrabajadas, 8) * tarifaSede.diurna) + (registro.horasExtras * tarifaSede.extraDiurna);
+        } else if (registro.tipoJornada === "nocturna") {
+            registro.valorTotal = (Math.min(registro.horasTrabajadas, 8) * tarifaSede.nocturna) + (registro.horasExtras * tarifaSede.extraNocturna);
+        } else if (registro.tipoJornada === "dominical") {
+            registro.valorTotal = registro.horasTrabajadas * tarifaSede.dominical;
+        }
+    }
+
+    // Guardar cambios en localStorage
+    localStorage.setItem("registrosJornadas", JSON.stringify(registrosJornadas));
+
+    // Actualizar la tabla de jornadas
+    mostrarRegistrosJornadas();
+
+    // Cerrar el modal
+    Swal.fire("Éxito", "Jornada actualizada correctamente", "success");
+    cerrarModalEditarJornada();
+});
+       
+
+ function cerrarModalEditarJornada() {
+            document.getElementById("modalEditarJornada").style.display = "none";
+        }
+        function abrirModalTrabajador() {
+            document.getElementById("modalTrabajadores").style.display = "flex";
+        }
+        function cerrarModalTrabajador() {
+            document.getElementById("modalTrabajadores").style.display = "none";
+        }
+        function abrirModalTarifa() {
+            actualizarFiltroSedes();
+            document.getElementById("modalTarifas").style.display = "flex";
+        }
+        function cerrarModalTarifa() {
+            document.getElementById("modalTarifas").style.display = "none";
+        }
+        function abrirModalSede() {
+            document.getElementById("modalSedes").style.display = "flex";
+        }
+        function cerrarModalSede() {
+            document.getElementById("modalSedes").style.display = "none";
+        }
+        function abrirModalUsuario() {
+            document.getElementById("modalUsuarios").style.display = "flex";
+        }
+        function cerrarModalUsuario() {
+            document.getElementById("modalUsuarios").style.display = "none";
+        }
+        function abrirModalEditarUsuario(index) {
+            let usuario = usuarios[index];
+            document.getElementById("editarUsuarioId").value = index;
+            document.getElementById("editarNombreUsuario").value = usuario.nombre;
+            document.getElementById("editarAccesoTrabajadores").checked = usuario.accesoTrabajadores;
+            document.getElementById("editarAccesoJornadas").checked = usuario.accesoJornadas;
+            document.getElementById("editarAccessoTarifas").checked = usuario.accessoTarifas;
+            document.getElementById("editarAccessoSedes").checked = usuario.accessoSedes;
+            document.getElementById("modalEditarUsuario").style.display = "flex";
+        }
+        function cerrarModalEditarUsuario() {
+            document.getElementById("modalEditarUsuario").style.display = "none";
+        }
+
+        // Registrar usuario
+	document.getElementById("usuariosForm").addEventListener("submit", function(event) {
+   	 event.preventDefault();
+   	 let nombreUsuario = document.getElementById("nombreUsuario").value;
+   	 let contrasenaUsuario = document.getElementById("contrasenaUsuario").value;
+   	 let accesoTrabajadores = document.getElementById("accesoTrabajadores").checked;
+   	 let accesoJornadas = document.getElementById("accesoJornadas").checked;
+   	 let accessoTarifas = document.getElementById("accessoTarifas").checked;
+   	 let accessoSedes = document.getElementById("accessoSedes").checked;
+
+    if (usuarios.some(u => u.nombre === nombreUsuario)) {
+        Swal.fire("Error", "Ya existe un usuario con este nombre", "error");
+        return;
+    }
+
+            // Si el usuario es Gerente, asignar todos los permisos
+            if (nombreUsuario === "Gerente") {
+                accesoTrabajadores = true;
+                accesoJornadas = true;
+                accessoTarifas = true;
+                accessoSedes = true;
+            }
+
+    let usuario = {
+        nombre: nombreUsuario,
+        contrasena: contrasenaUsuario,
+        accesoTrabajadores,
+        accesoJornadas,
+        accessoTarifas,
+        accessoSedes
+    };
+    usuarios.push(usuario);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    mostrarUsuarios();
+    Swal.fire("Éxito", "Usuario registrado correctamente", "success");
+    this.reset();
+    cerrarModalUsuario();
+});
+
+        // Editar usuario
+document.getElementById("editarUsuarioForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    let index = document.getElementById("editarUsuarioId").value;
+    let usuario = usuarios[index];
+    usuario.accesoTrabajadores = document.getElementById("editarAccesoTrabajadores").checked;
+    usuario.accesoJornadas = document.getElementById("editarAccesoJornadas").checked;
+    usuario.accessoTarifas = document.getElementById("editarAccessoTarifas").checked;
+    usuario.accessoSedes = document.getElementById("editarAccessoSedes").checked;
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    mostrarUsuarios();
+    Swal.fire("Éxito", "Usuario actualizado correctamente", "success");
+    cerrarModalEditarUsuario();
+});
+
+        // Mostrar usuarios
+function mostrarUsuarios() {
+    let tbody = document.getElementById("tablaUsuarios");
+    tbody.innerHTML = "";
+    usuarios.forEach((usuario, index) => {
+        let fila = `<tr>
+            <td>${usuario.nombre}</td>
+            <td>${usuario.accesoTrabajadores ? "Sí" : "No"}</td>
+            <td>${usuario.accesoJornadas ? "Sí" : "No"}</td>
+            <td>${usuario.accessoTarifas ? "Sí" : "No"}</td>
+            <td>${usuario.accessoSedes ? "Sí" : "No"}</td>
+            <td>
+                <button class="btn-editar" onclick="abrirModalEditarUsuario(${index})">Editar</button>
+                <button class="btn-eliminar" onclick="eliminarUsuario(${index})">Eliminar</button>
+            </td>
+        </tr>`;
+        tbody.innerHTML += fila;
+    });
+}
+        document.addEventListener("DOMContentLoaded", mostrarUsuarios);
+
+        // Eliminar usuario
+        function eliminarUsuario(index) {
+            usuarios.splice(index, 1);
+            localStorage.setItem("usuarios", JSON.stringify(usuarios));
+            mostrarUsuarios();
+            Swal.fire("Éxito", "Usuario eliminado correctamente", "success");
+        }
+
+        // Descargar registro de jornadas en Excel
+        function descargarExcel() {
+            const datos = registrosJornadas.map(registro => ({
+                Nombre: registro.nombre,
+                Sede: registro.sede,
+                Línea: registro.linea,
+                Fecha: registro.fecha,
+                "Hora Inicio": registro.horaInicio,
+                "Hora Fin": registro.horaFin,
+                "Horas Trabajadas": registro.horasTrabajadas,
+                "Horas Extras": registro.horasExtras,
+                "Tipo de Jornada": registro.tipoJornada,
+                "Valor Total": registro.valorTotal
+            }));
+
+            const hoja = XLSX.utils.json_to_sheet(datos);
+            const libro = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(libro, hoja, "Jornadas");
+            XLSX.writeFile(libro, "registro_jornadas.xlsx");
+        }
+
+// Actualizar lista de trabajadores en el modal de jornadas
+        function actualizarFiltroTrabajadores() {
+            let select = document.getElementById("nombreTrabajadorJornada");
+            select.innerHTML = `<option value="">Seleccione un trabajador</option>`;
+            trabajadores.forEach(trabajador => {
+                let option = new Option(`${trabajador.nombre} - ${trabajador.numeroDocumento}`, trabajador.numeroDocumento);
+                select.appendChild(option);
+            });
+        }
+
+        // Actualizar lista de sedes en los modales
+        function actualizarFiltroSedes() {
+            let selectJornada = document.getElementById("sede");
+            let selectTarifa = document.getElementById("sedeTarifa");
+            selectJornada.innerHTML = `<option value="">Seleccione una sede</option>`;
+            selectTarifa.innerHTML = `<option value="">Seleccione una sede</option>`;
+            sedes.forEach(sede => {
+                let option = new Option(sede.nombre, sede.nombre);
+                selectJornada.appendChild(option.cloneNode(true));
+                selectTarifa.appendChild(option.cloneNode(true));
+            });
+        }
+
+        // Cargar líneas según la sede seleccionada
+        function cargarLineas() {
+            let sedeSeleccionada = document.getElementById("sede").value;
+            let selectLinea = document.getElementById("linea");
+            selectLinea.innerHTML = `<option value="">Seleccione una línea</option>`;
+            if (sedeSeleccionada) {
+                let sede = sedes.find(s => s.nombre === sedeSeleccionada);
+                if (sede) {
+                    let option = new Option(sede.linea, sede.linea);
+                    selectLinea.appendChild(option);
+                }
+            }
+        }
+
+        // Cargar tarifas existentes para la sede seleccionada
+        function cargarTarifas() {
+            let sedeSeleccionada = document.getElementById("sedeTarifa").value;
+            if (sedeSeleccionada) {
+                let tarifaExistente = tarifas.find(t => t.sede === sedeSeleccionada);
+                if (tarifaExistente) {
+                    document.getElementById("tarifaDiurna").value = tarifaExistente.diurna;
+                    document.getElementById("tarifaExtraDiurna").value = tarifaExistente.extraDiurna;
+                    document.getElementById("tarifaNocturna").value = tarifaExistente.nocturna;
+                    document.getElementById("tarifaExtraNocturna").value = tarifaExistente.extraNocturna;
+                    document.getElementById("tarifaDominical").value = tarifaExistente.dominical;
+                } else {
+                    document.getElementById("tarifaDiurna").value = "";
+                    document.getElementById("tarifaExtraDiurna").value = "";
+                    document.getElementById("tarifaNocturna").value = "";
+                    document.getElementById("tarifaExtraNocturna").value = "";
+                    document.getElementById("tarifaDominical").value = "";
+                }
+            }
+        }
+
+        // Registrar trabajador
+        document.getElementById("registroForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let numeroDocumento = document.getElementById("numeroDocumento").value;
+            if (trabajadores.some(trabajador => trabajador.numeroDocumento === numeroDocumento)) {
+                Swal.fire("Error", "Ya existe un trabajador con este número de documento", "error");
+                return;
+            }
+            let trabajador = {
+                tipoDocumento: document.getElementById("tipoDocumento").value,
+                numeroDocumento: numeroDocumento,
+                nombre: document.getElementById("nombreTrabajador").value,
+                residencia: document.getElementById("residencia").value
+            };
+            trabajadores.push(trabajador);
+            localStorage.setItem("trabajadores", JSON.stringify(trabajadores));
+            actualizarListaTrabajadores();
+            Swal.fire("Éxito", "Trabajador registrado correctamente", "success");
+            this.reset();
+            cerrarModalTrabajador();
+        });
+
+        // Actualizar lista de trabajadores
+        function actualizarListaTrabajadores() {
+            let tbody = document.getElementById("listaTrabajadores");
+            tbody.innerHTML = "";
+            trabajadores.forEach((trabajador, index) => {
+                let row = `<tr>
+                    <td>${trabajador.nombre}</td>
+                    <td>${trabajador.tipoDocumento}</td>
+                    <td>${trabajador.numeroDocumento}</td>
+                    <td>${trabajador.residencia}</td>
+                    <td><button class="btn-eliminar" onclick="eliminarTrabajador(${index})">Eliminar</button></td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+        document.addEventListener("DOMContentLoaded", actualizarListaTrabajadores);
+
+        // Filtrar trabajadores
+        function filtrarTrabajadores() {
+            let filtro = document.getElementById("filtroTrabajadores").value.toLowerCase();
+            let tbody = document.getElementById("listaTrabajadores");
+            tbody.innerHTML = "";
+            trabajadores.forEach((trabajador, index) => {
+                if (trabajador.nombre.toLowerCase().includes(filtro) || trabajador.numeroDocumento.includes(filtro)) {
+                    let row = `<tr>
+                        <td>${trabajador.nombre}</td>
+                        <td>${trabajador.tipoDocumento}</td>
+                        <td>${trabajador.numeroDocumento}</td>
+                        <td>${trabajador.residencia}</td>
+                        <td><button class="btn-eliminar" onclick="eliminarTrabajador(${index})">Eliminar</button></td>
+                    </tr>`;
+                    tbody.innerHTML += row;
+                }
+            });
+        }
+
+        // Eliminar trabajador
+        function eliminarTrabajador(index) {
+            trabajadores.splice(index, 1);
+            localStorage.setItem("trabajadores", JSON.stringify(trabajadores));
+            actualizarListaTrabajadores();
+            Swal.fire("Éxito", "Trabajador eliminado correctamente", "success");
+        }
+
+        // Registrar jornada laboral
+        document.getElementById("registroJornadaForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+	    let trabajadorSeleccionado = document.getElementById("nombreTrabajadorJornada").value;
+	    let [nombreTrabajador, numeroDocumento] = trabajadorSeleccionado.split(" - ");
+	    let sede = document.getElementById("sede").value;
+	    let linea = document.getElementById("linea").value; // Obtener la línea
+	    let fecha = document.getElementById("fechaJornada").value;
+	    let horaInicio = document.getElementById("horaInicio").value;
+	    let horaFin = document.getElementById("horaFin").value;
+	    let horasDescuento = parseFloat(document.getElementById("horasDescuento").value) || 0;
+	    let tipoJornada = document.getElementById("tipoJornada").value;
+
+            // Validar campos obligatorios
+            if (!cedula || !nombreTrabajador || !sede || !linea || !fecha || !horaInicio || !horaFin || !tipoJornada) {
+                Swal.fire("Error", "Todos los campos son obligatorios", "error");
+                return;
+            }
+
+            // Calcular horas trabajadas
+            let horasTrabajadas = calcularHoras(horaInicio, horaFin) - horasDescuento;
+            if (horasTrabajadas < 0) horasTrabajadas = 0;
+
+            // Calcular horas extras
+            let horasExtras = Math.max(0, horasTrabajadas - 8); // Horas extras después de 8 horas
+
+            // Buscar tarifa para la sede
+            let tarifaSede = tarifas.find(t => t.sede === sede);
+            if (!tarifaSede) {
+                Swal.fire("Error", "No se encontraron tarifas para la sede seleccionada", "error");
+                return;
+            }
+
+            // Calcular valor total
+            let valorTotal = 0;
+            if (tipoJornada === "diurna") {
+                valorTotal = (Math.min(horasTrabajadas, 8) * tarifaSede.diurna) + (horasExtras * tarifaSede.extraDiurna);
+            } else if (tipoJornada === "nocturna") {
+                valorTotal = (Math.min(horasTrabajadas, 8) * tarifaSede.nocturna) + (horasExtras * tarifaSede.extraNocturna);
+            } else if (tipoJornada === "dominical") {
+                valorTotal = horasTrabajadas * tarifaSede.dominical; // Tarifa dominical/festiva
+            }
+
+            // Registrar la jornada
+            let registro = { nombre, sede, linea, fecha, horaInicio, horaFin, horasTrabajadas, horasExtras, tipoJornada, valorTotal };
+            registrosJornadas.push(registro);
+            localStorage.setItem("registrosJornadas", JSON.stringify(registrosJornadas));
+            mostrarRegistrosJornadas();
+            Swal.fire("Éxito", "Jornada registrada correctamente", "success");
+            this.reset();
+            cerrarModalJornada();
+        });
+
+        // Calcular horas trabajadas
+
+function calcularHoras(inicio, fin) {
+    let inicioHora = new Date(`1970-01-01T${inicio}:00`);
+    let finHora = new Date(`1970-01-01T${fin}:00`);
+    if (finHora < inicioHora) {
+        finHora.setDate(finHora.getDate() + 1);
+    }
+    return (finHora - inicioHora) / (1000 * 60 * 60); // Convertir a horas
+}
+
+
+        // Mostrar registros de jornadas
+        function mostrarRegistrosJornadas() {
+    let tbody = document.getElementById("tablaRegistrosJornadas");
+    tbody.innerHTML = "";
+    let totalPago = 0;
+    registrosJornadas.forEach((registro, index) => {
+        let claseExceso = registro.horasTrabajadas > 8 ? "exceso-horas" : "";
+        let fila = `<tr class="${claseExceso}">
+            <td>${registro.nombre}</td>
+            <td>${registro.sede}</td>
+            <td>${registro.linea}</td>
+            <td>${registro.fecha}</td>
+            <td>${registro.horaInicio}</td>
+            <td>${registro.horaFin}</td>
+            <td>${registro.horasTrabajadas.toFixed(2)} h</td>
+            <td>${registro.horasExtras.toFixed(2)} h</td>
+            <td>${registro.tipoJornada}</td>
+            <td>$${registro.valorTotal.toLocaleString()}</td>
+            <td>
+                <button class="btn-editar" onclick="abrirModalEditarJornada(${index})">Editar</button>
+                <button class="btn-eliminar" onclick="eliminarJornada(${index})">Eliminar</button>
+            </td>
+        </tr>`;
+        tbody.innerHTML += fila;
+        totalPago += registro.valorTotal;
+    });
+    document.getElementById("totalPagoJornadas").textContent = `Total a pagar: $${totalPago.toLocaleString()}`;
+}        document.addEventListener("DOMContentLoaded", mostrarRegistrosJornadas);
+
+        // Actualizar jornadas con las nuevas tarifas
+        function actualizarJornadas() {
+            registrosJornadas.forEach(registro => {
+                let tarifaSede = tarifas.find(t => t.sede === registro.sede);
+                if (tarifaSede) {
+                    let horasExtras = Math.max(0, registro.horasTrabajadas - 8);
+                    if (registro.tipoJornada === "diurna") {
+                        registro.valorTotal = (Math.min(registro.horasTrabajadas, 8) * tarifaSede.diurna) + (horasExtras * tarifaSede.extraDiurna);
+                    } else if (registro.tipoJornada === "nocturna") {
+                        registro.valorTotal = (Math.min(registro.horasTrabajadas, 8) * tarifaSede.nocturna) + (horasExtras * tarifaSede.extraNocturna);
+                    } else if (registro.tipoJornada === "dominical") {
+                        registro.valorTotal = registro.horasTrabajadas * tarifaSede.dominical;
+                    }
+                }
+            });
+            localStorage.setItem("registrosJornadas", JSON.stringify(registrosJornadas));
+            mostrarRegistrosJornadas();
+            Swal.fire("Éxito", "Jornadas actualizadas con las nuevas tarifas", "success");
+        }
+
+        // Registrar tarifas
+        document.getElementById("tarifasForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let sede = document.getElementById("sedeTarifa").value;
+            let tarifaDiurna = parseFloat(document.getElementById("tarifaDiurna").value);
+            let tarifaExtraDiurna = parseFloat(document.getElementById("tarifaExtraDiurna").value);
+            let tarifaNocturna = parseFloat(document.getElementById("tarifaNocturna").value);
+            let tarifaExtraNocturna = parseFloat(document.getElementById("tarifaExtraNocturna").value);
+            let tarifaDominical = parseFloat(document.getElementById("tarifaDominical").value);
+
+            // Verificar si ya existe una tarifa para esta sede
+            let tarifaExistente = tarifas.find(t => t.sede === sede);
+            if (tarifaExistente) {
+                // Actualizar tarifa existente
+                tarifaExistente.diurna = tarifaDiurna;
+                tarifaExistente.extraDiurna = tarifaExtraDiurna;
+                tarifaExistente.nocturna = tarifaNocturna;
+                tarifaExistente.extraNocturna = tarifaExtraNocturna;
+                tarifaExistente.dominical = tarifaDominical;
+            } else {
+                // Crear nueva tarifa
+                tarifas.push({
+                    sede: sede,
+                    diurna: tarifaDiurna,
+                    extraDiurna: tarifaExtraDiurna,
+                    nocturna: tarifaNocturna,
+                    extraNocturna: tarifaExtraNocturna,
+                    dominical: tarifaDominical
+                });
+            }
+            localStorage.setItem("tarifas", JSON.stringify(tarifas));
+            mostrarTarifas();
+            Swal.fire("Éxito", "Tarifa registrada correctamente", "success");
+            this.reset();
+            cerrarModalTarifa();
+        });
+
+        // Mostrar tarifas
+        function mostrarTarifas() {
+            let tbody = document.getElementById("tablaTarifas");
+            tbody.innerHTML = "";
+            tarifas.forEach((tarifa, index) => {
+                let fila = `<tr>
+                    <td>${tarifa.sede}</td>
+                    <td>$${tarifa.diurna.toLocaleString()}</td>
+                    <td>$${tarifa.extraDiurna.toLocaleString()}</td>
+                    <td>$${tarifa.nocturna.toLocaleString()}</td>
+                    <td>$${tarifa.extraNocturna.toLocaleString()}</td>
+                    <td>$${tarifa.dominical.toLocaleString()}</td>
+                    <td><button class="btn-eliminar" onclick="eliminarTarifa(${index})">Eliminar</button></td>
+                </tr>`;
+                tbody.innerHTML += fila;
+            });
+        }
+        document.addEventListener("DOMContentLoaded", mostrarTarifas);
+
+        // Eliminar tarifa
+        function eliminarTarifa(index) {
+            tarifas.splice(index, 1);
+            localStorage.setItem("tarifas", JSON.stringify(tarifas));
+            mostrarTarifas();
+            Swal.fire("Éxito", "Tarifa eliminada correctamente", "success");
+        }
+
+        // Registrar sede
+        document.getElementById("sedesForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let nombreSede = document.getElementById("nombreSede").value;
+            let lineaSede = document.getElementById("lineaSede").value;
+
+            // Validar campos obligatorios
+            if (!nombreSede || !lineaSede) {
+                Swal.fire("Error", "Todos los campos son obligatorios", "error");
+                return;
+            }
+
+            // Verificar si ya existe una sede con el mismo nombre
+            if (sedes.some(sede => sede.nombre === nombreSede)) {
+                Swal.fire("Error", "Ya existe una sede con este nombre", "error");
+                return;
+            }
+
+            // Registrar la sede
+            let sede = { nombre: nombreSede, linea: lineaSede };
+            sedes.push(sede);
+            localStorage.setItem("sedes", JSON.stringify(sedes));
+            mostrarSedes();
+            Swal.fire("Éxito", "Sede registrada correctamente", "success");
+            this.reset();
+            cerrarModalSede();
+        });
+
+        // Mostrar sedes
+        function mostrarSedes() {
+            let tbody = document.getElementById("tablaSedes");
+            tbody.innerHTML = "";
+            sedes.forEach((sede, index) => {
+                let fila = `<tr>
+                    <td>${sede.nombre}</td>
+                    <td>${sede.linea}</td>
+                    <td><button class="btn-eliminar" onclick="eliminarSede(${index})">Eliminar</button></td>
+                </tr>`;
+                tbody.innerHTML += fila;
+            });
+            actualizarFiltroSedes();
+        }
+        document.addEventListener("DOMContentLoaded", mostrarSedes);
+
+        // Eliminar sede
+        function eliminarSede(index) {
+            sedes.splice(index, 1);
+            localStorage.setItem("sedes", JSON.stringify(sedes));
+            mostrarSedes();
+            Swal.fire("Éxito", "Sede eliminada correctamente", "success");
+        }
+    </script>
+        
+</body>
+</html>
